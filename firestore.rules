@@ -1,0 +1,40 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Hero Images collection
+    match /heroImages/{imageId} {
+      allow read: if true;  // Anyone can read hero images
+      allow write: if request.auth != null;  // Only authenticated users can modify
+    }
+    
+    // Website Images collection
+    match /websiteImages/{imageId} {
+      allow read: if true;  // Anyone can view images
+      allow write: if request.auth != null;  // Only admin can manage
+    }
+    
+    // Training Requests collection
+    match /trainingRequests/{requestId} {
+      allow read: if request.auth != null;  // Only admin can read requests
+      allow create: if true;  // Anyone can create a request
+      allow update, delete: if request.auth != null;  // Only admin can update/delete
+    }
+    
+    // Available Dates collection
+    match /availableDates/{dateId} {
+      allow read: if true;  // Anyone can read available dates
+      allow write: if request.auth != null;  // Only admin can modify
+    }
+
+    // Settings collection
+    match /settings/{document} {
+      allow read: if request.auth != null;  // Only authenticated users can read settings
+      allow write: if request.auth != null && request.auth.token.admin == true;  // Only admin can modify settings
+    }
+
+    // Default deny all other collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+} 

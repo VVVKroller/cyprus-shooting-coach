@@ -1,0 +1,201 @@
+{
+  "meta": {
+    "title": "Professional Shooting Training in Cyprus | Expert Firearms Instruction",
+    "description": "Expert firearms training in Cyprus for all skill levels. Learn from certified professionals in a safe, controlled environment. Personalized instruction and flexible scheduling available."
+  },
+  "header": {
+    "about": "About",
+    "services": "Services",
+    "reviews": "Reviews",
+    "bookTraining": "Book Training"
+  },
+  "hero": {
+    "title": "Professional Shooting Training in Cyprus",
+    "subtitle": "Special programs for beginners and individuals who want to test their shooting talent. Training in safe weapon handling and assistance in shooting moving targets.",
+    "cta": "Book Training",
+    "stats": {
+      "experience": "15+",
+      "experienceLabel": "Years of Experience",
+      "students": "600+",
+      "studentsLabel": "Trained Students",
+      "satisfaction": "99%",
+      "satisfactionLabel": "Student Satisfaction",
+      "awards": "25+",
+      "awardsLabel": "International Awards"
+    }
+  },
+  "features": {
+    "title": "Why Choose Us",
+    "certifiedInstructor": {
+      "title": "Certified Instructor",
+      "description": "Professional training from a certified expert with years of experience"
+    },
+    "personalizedApproach": {
+      "title": "Personalized Approach",
+      "description": "Training programs tailored to your skill level and goals"
+    },
+    "smallGroups": {
+      "title": "Small Group Sessions",
+      "description": "Individual attention in a comfortable learning environment"
+    },
+    "flexibleSchedule": {
+      "title": "Flexible Schedule",
+      "description": "Training sessions that fit your busy lifestyle"
+    }
+  },
+  "services": {
+    "title": "Training Programs",
+    "learnMore": "Learn More",
+    "bookNow": "Book Training Now",
+    "about": {
+      "title": "About This Program"
+    },
+    "features": {
+      "title": "What You'll Learn"
+    },
+    "beginner": {
+      "title": "Beginner Course",
+      "description": "Perfect for those new to shooting. This comprehensive course covers all the fundamentals of firearm safety and basic marksmanship. You'll learn in a controlled, supportive environment with personalized attention.",
+      "features": [
+        "Firearm safety fundamentals",
+        "Proper stance and grip",
+        "Basic marksmanship",
+        "Range etiquette"
+      ],
+      "price": "Starting at €75/hour",
+      "duration": "2-3 hours per session"
+    },
+    "intermediate": {
+      "title": "Intermediate Training",
+      "description": "Designed for shooters who have mastered the basics and want to enhance their skills. This program focuses on advanced techniques and practical applications, helping you become a more confident and capable shooter.",
+      "features": [
+        "Advanced shooting techniques",
+        "Movement drills",
+        "Speed and accuracy",
+        "Tactical applications"
+      ],
+      "price": "Starting at €90/hour",
+      "duration": "2-4 hours per session"
+    },
+    "advanced": {
+      "title": "Advanced Program",
+      "description": "For experienced shooters looking to reach peak performance. This intensive program covers complex scenarios, competition-level techniques, and mental training to help you achieve mastery in your shooting discipline.",
+      "features": [
+        "Competition preparation",
+        "Complex scenarios",
+        "Mental training",
+        "Performance optimization"
+      ],
+      "price": "Starting at €120/hour",
+      "duration": "3-4 hours per session"
+    }
+  },
+  "trainer": {
+    "title": "Expert Training by Renos Charalampous",
+    "description": "With over 15 years of experience in professional shooting instruction and multiple international certifications, your training is in expert hands.",
+    "awards": {
+      "issf": {
+        "title": "ISSF Level A Coach",
+        "description": "International Certification"
+      },
+      "european": {
+        "title": "European Champion",
+        "description": "2019 Practical Shooting"
+      },
+      "master": {
+        "title": "Master Instructor",
+        "description": "Cyprus Shooting Federation"
+      },
+      "experience": {
+        "title": "15+ Years",
+        "description": "Training Experience"
+      }
+    }
+  },
+  "testimonials": {
+    "title": "What Our Students Say",
+    "subtitle": "Read about the experiences of our students",
+    "verified": "Verified Student",
+    "reviews": [
+      {
+        "text": "The personalized attention and expert guidance helped me develop proper technique from day one. Highly recommended!",
+        "author": "Michael S."
+      },
+      {
+        "text": "As a competitive shooter, the advanced training program took my performance to the next level. The results speak for themselves.",
+        "author": "Sarah L."
+      },
+      {
+        "text": "The instructor's patience and knowledge made learning enjoyable and effective. I'm now much more confident in my abilities.",
+        "author": "David R."
+      },
+      {
+        "text": "Outstanding training facility with top-notch instruction. The advanced drills really pushed my skills forward.",
+        "author": "Emma K."
+      },
+      {
+        "text": "Professional, safety-focused, and extremely knowledgeable. Best firearms training I've ever received.",
+        "author": "James M."
+      },
+      {
+        "text": "The structured progression from basics to advanced techniques was perfect. Worth every penny!",
+        "author": "Alexandra P."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Schedule Your Training",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "message": "Message",
+      "submit": "Send Message",
+      "dateTime": "Select Date & Time",
+      "scheduling": "Scheduling...",
+      "scheduleTraining": "Schedule Training",
+      "calendar": {
+        "selectDate": "Please select a date",
+        "loadingTimes": "Loading available times...",
+        "noSlots": "No available time slots for this date"
+      },
+      "consent": {
+        "text": "I agree to the processing of my personal data for the purpose of scheduling training sessions. I understand that my data will be handled in accordance with the privacy policy and that I can withdraw my consent at any time. I also confirm that I am at least 18 years old or have parental consent.",
+        "privacy": "By scheduling a training session, you acknowledge that you have read and agree to our Terms of Service and Privacy Policy. Your data will be used solely for training coordination purposes."
+      },
+      "confirmation": {
+        "title": "Confirm Training Request",
+        "text": "You are about to request a training session for:",
+        "details": {
+          "date": "Date",
+          "time": "Time",
+          "name": "Name",
+          "phone": "Phone"
+        },
+        "check": "Please confirm that these details are correct.",
+        "cancel": "Cancel",
+        "confirm": "Confirm Training",
+        "confirming": "Confirming..."
+      },
+      "success": "Your training request has been submitted. We'll contact you soon!",
+      "error": "There was an error submitting your request. Please try again."
+    }
+  },
+  "footer": {
+    "contact": {
+      "title": "Contact Us",
+      "location": "Nicosia, Cyprus"
+    },
+    "social": {
+      "title": "Follow Us"
+    },
+    "hours": {
+      "title": "Training Hours",
+      "weekdays": "Monday - Friday: 9:00 - 17:00",
+      "saturday": "Saturday: 9:00 - 14:00",
+      "sunday": "Sunday: Closed"
+    },
+    "rights": "All rights reserved.",
+    "developer": "Website developed by"
+  }
+}
