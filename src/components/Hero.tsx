@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  memoryLocalCache,
+} from "firebase/firestore";
 import { db } from "../firebase/config";
 import { useTranslation } from "react-i18next";
 
@@ -17,10 +23,13 @@ const localHeroImages = [
   { url: Hero04, alt: "Hero Image 4" },
 ];
 
+const cachedHeroImages = JSON.parse(localStorage.getItem("heroImages") || "[]");
+
 export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [slides, setSlides] = useState<{ url: string; alt: string }[]>([]);
-  const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [slides, setSlides] =
+    useState<{ url: string; alt: string }[]>(cachedHeroImages);
+  const [imagesLoaded, setImagesLoaded] = useState(cachedHeroImages.length > 0);
   const { t } = useTranslation();
 
   // Preload images
@@ -55,6 +64,7 @@ export default function Hero() {
         // Preload all images
         if (uploadedSlides.length > 0) {
           await preloadImages(uploadedSlides.map((slide) => slide.url));
+          localStorage.setItem("heroImages", JSON.stringify(uploadedSlides));
         } else {
           // If no images in database, use local images as fallback
           setSlides(localHeroImages);
