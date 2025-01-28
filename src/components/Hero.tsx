@@ -25,6 +25,35 @@ const localHeroImages = [
 
 const cachedHeroImages = JSON.parse(localStorage.getItem("heroImages") || "[]");
 
+// Add this utility function at the top of the file
+const getTextSizeClass = (
+  text: string,
+  type: "title" | "subtitle" | "stat" | "statLabel"
+) => {
+  const len = text.length;
+
+  switch (type) {
+    case "title":
+      if (len > 30) return "text-xl sm:text-2xl md:text-4xl lg:text-5xl";
+      return "text-2xl sm:text-3xl md:text-5xl lg:text-6xl";
+
+    case "subtitle":
+      if (len > 100) return "text-sm sm:text-base md:text-xl";
+      return "text-base sm:text-lg md:text-2xl";
+
+    case "stat":
+      if (len > 5) return "text-lg md:text-3xl";
+      return "text-xl md:text-4xl";
+
+    case "statLabel":
+      if (len > 20) return "text-[8px] md:text-xs";
+      return "text-[10px] md:text-sm";
+
+    default:
+      return "";
+  }
+};
+
 export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [slides, setSlides] =
@@ -107,7 +136,7 @@ export default function Hero() {
   }
 
   return (
-    <section className="relative bg-black text-white h-[450px] md:h-[700px] flex items-center overflow-hidden">
+    <section className="relative bg-black text-white h-[600px] md:h-[700px] flex items-center overflow-hidden">
       {/* Slides */}
       {slides.map((slide, index) => (
         <div
@@ -130,53 +159,103 @@ export default function Hero() {
       <div className="absolute inset-0 bg-black/60" />
 
       {/* Content */}
-      <div className="container mx-auto px-4 relative z-10 flex flex-col justify-center h-full">
-        <div className="max-w-3xl mb-8 md:mb-16">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
+      <div className="container mx-auto px-4 relative z-10 flex flex-col justify-center h-full pt-16 md:pt-0">
+        <div className="max-w-3xl mb-6 md:mb-16">
+          <h1
+            className={`font-bold mb-3 md:mb-6 ${getTextSizeClass(
+              t("hero.title"),
+              "title"
+            )}`}
+          >
             {t("hero.title")}
           </h1>
-          <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-6 md:mb-8">
+          <p
+            className={`text-gray-300 mb-4 md:mb-8 ${getTextSizeClass(
+              t("hero.subtitle"),
+              "subtitle"
+            )}`}
+          >
             {t("hero.subtitle")}
           </p>
           <a
             href="#contact"
-            className="inline-block bg-amber-500 text-gray-900 px-6 md:px-8 py-3 md:py-4 rounded-md font-semibold hover:bg-amber-400 transition-colors text-sm md:text-base"
+            className="inline-block bg-amber-500 text-gray-900 px-5 md:px-8 py-2.5 md:py-4 rounded-md font-semibold hover:bg-amber-400 transition-colors text-sm md:text-base"
           >
             {t("hero.cta")}
           </a>
         </div>
 
         {/* Statistics */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-4xl">
-          <div className="text-center">
-            <div className="text-2xl md:text-4xl font-bold text-amber-500 mb-1 md:mb-2">
+        <div className="grid grid-cols-2 gap-3 md:gap-8 max-w-4xl">
+          <div className="text-center p-2">
+            <div
+              className={`font-bold text-amber-500 mb-0.5 md:mb-2 ${getTextSizeClass(
+                t("hero.stats.experience"),
+                "stat"
+              )}`}
+            >
               {t("hero.stats.experience")}
             </div>
-            <div className="text-xs md:text-sm text-gray-300">
+            <div
+              className={`text-gray-300 ${getTextSizeClass(
+                t("hero.stats.experienceLabel"),
+                "statLabel"
+              )}`}
+            >
               {t("hero.stats.experienceLabel")}
             </div>
           </div>
-          <div className="text-center">
-            <div className="text-2xl md:text-4xl font-bold text-amber-500 mb-1 md:mb-2">
+          <div className="text-center p-2">
+            <div
+              className={`font-bold text-amber-500 mb-0.5 md:mb-2 ${getTextSizeClass(
+                t("hero.stats.students"),
+                "stat"
+              )}`}
+            >
               {t("hero.stats.students")}
             </div>
-            <div className="text-xs md:text-sm text-gray-300">
+            <div
+              className={`text-gray-300 ${getTextSizeClass(
+                t("hero.stats.studentsLabel"),
+                "statLabel"
+              )}`}
+            >
               {t("hero.stats.studentsLabel")}
             </div>
           </div>
-          <div className="text-center">
-            <div className="text-2xl md:text-4xl font-bold text-amber-500 mb-1 md:mb-2">
+          <div className="text-center p-2">
+            <div
+              className={`font-bold text-amber-500 mb-0.5 md:mb-2 ${getTextSizeClass(
+                t("hero.stats.satisfaction"),
+                "stat"
+              )}`}
+            >
               {t("hero.stats.satisfaction")}
             </div>
-            <div className="text-xs md:text-sm text-gray-300">
+            <div
+              className={`text-gray-300 ${getTextSizeClass(
+                t("hero.stats.satisfactionLabel"),
+                "statLabel"
+              )}`}
+            >
               {t("hero.stats.satisfactionLabel")}
             </div>
           </div>
-          <div className="text-center">
-            <div className="text-2xl md:text-4xl font-bold text-amber-500 mb-1 md:mb-2">
+          <div className="text-center p-2">
+            <div
+              className={`font-bold text-amber-500 mb-0.5 md:mb-2 ${getTextSizeClass(
+                t("hero.stats.awards"),
+                "stat"
+              )}`}
+            >
               {t("hero.stats.awards")}
             </div>
-            <div className="text-xs md:text-sm text-gray-300">
+            <div
+              className={`text-gray-300 ${getTextSizeClass(
+                t("hero.stats.awardsLabel"),
+                "statLabel"
+              )}`}
+            >
               {t("hero.stats.awardsLabel")}
             </div>
           </div>
@@ -184,7 +263,7 @@ export default function Hero() {
       </div>
 
       {/* Dots */}
-      <div className="absolute bottom-4 md:bottom-8 left-0 right-0 flex justify-center gap-2 z-10">
+      <div className="absolute bottom-2 md:bottom-8 left-0 right-0 flex justify-center gap-2 z-10">
         {slides.map((_, index) => (
           <button
             key={index}

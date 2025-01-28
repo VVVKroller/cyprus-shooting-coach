@@ -34,7 +34,7 @@ export default function TrainerAwards() {
               src={coachPhoto}
               alt={t("trainer.title")}
               className="rounded-lg shadow-xl w-full max-w-md mx-auto object-cover 
-                       h-[500px] md:h-[400px] transition-transform duration-500 hover:scale-105"
+                       h-[300px] sm:h-[400px] md:h-[400px] transition-transform duration-500 hover:scale-105"
             />
           </div>
 

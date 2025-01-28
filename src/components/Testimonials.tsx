@@ -13,7 +13,7 @@ export default function Testimonials() {
         scrollRef.current.style.animation = "none";
         scrollRef.current.offsetHeight; // Trigger reflow
         scrollRef.current.style.animation = `scroll ${
-          isMobile ? "30s" : "50s"
+          isMobile ? "20s" : "50s"
         } linear infinite`;
       }
     };

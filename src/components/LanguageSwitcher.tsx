@@ -88,11 +88,12 @@ export default function LanguageSwitcher() {
         <button
           key={lang.code}
           onClick={() => changeLanguage(lang.code)}
-          className={`transition-transform hover:scale-110 ${
+          className={`transition-transform hover:scale-110 relative ${
             i18n.language === lang.code
-              ? "ring-2 ring-amber-500 rounded-sm"
-              : ""
+              ? "after:absolute after:inset-0 after:bg-amber-500/20 after:rounded-sm"
+              : "opacity-70 hover:opacity-100"
           }`}
+          aria-label={`Switch to ${lang.name}`}
         >
           {lang.flag}
         </button>
