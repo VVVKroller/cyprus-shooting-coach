@@ -57,8 +57,7 @@ const getTextSizeClass = (
 export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [slides, setSlides] =
-    useState<{ url: string; alt: string }[]>(cachedHeroImages);
-  const [imagesLoaded, setImagesLoaded] = useState(cachedHeroImages.length > 0);
+    useState<{ url: string; alt: string }[]>(localHeroImages);
   const { t } = useTranslation();
 
   // Preload images
@@ -71,15 +70,25 @@ export default function Hero() {
       });
     };
 
-    return Promise.all(imageUrls.map((url) => loadImage(url)))
-      .then(() => setImagesLoaded(true))
-      .catch((error) => console.error("Error preloading images:", error));
+    return Promise.all(imageUrls.map((url) => loadImage(url))).catch((error) =>
+      console.error("Error preloading images:", error)
+    );
   };
 
   useEffect(() => {
     const loadImages = async () => {
       try {
-        // Get uploaded images from Firestore
+        // Try to get cached images first
+        const cachedHeroImages = JSON.parse(
+          localStorage.getItem("heroImages") || "[]"
+        );
+        if (cachedHeroImages.length > 0) {
+          setSlides(cachedHeroImages);
+          preloadImages(cachedHeroImages.map((slide: any) => slide.url));
+          return;
+        }
+
+        // If no cached images, fetch from Firestore
         const q = query(collection(db, "heroImages"), orderBy("order"));
         const snapshot = await getDocs(q);
         const uploadedSlides = snapshot.docs.map((doc) => ({
@@ -87,23 +96,14 @@ export default function Hero() {
           alt: doc.data().alt,
         }));
 
-        // Use only database images
-        setSlides(uploadedSlides);
-
-        // Preload all images
         if (uploadedSlides.length > 0) {
-          await preloadImages(uploadedSlides.map((slide) => slide.url));
+          setSlides(uploadedSlides);
           localStorage.setItem("heroImages", JSON.stringify(uploadedSlides));
-        } else {
-          // If no images in database, use local images as fallback
-          setSlides(localHeroImages);
-          await preloadImages(localHeroImages.map((slide) => slide.url));
+          preloadImages(uploadedSlides.map((slide) => slide.url));
         }
       } catch (error) {
         console.error("Error loading images:", error);
-        // If there's an error, use local images as fallback
-        setSlides(localHeroImages);
-        await preloadImages(localHeroImages.map((slide) => slide.url));
+        // Keep using local images if there's an error
       }
     };
 
@@ -111,29 +111,14 @@ export default function Hero() {
   }, []);
 
   useEffect(() => {
-    if (!imagesLoaded || slides.length === 0) return;
+    if (slides.length === 0) return;
 
     const timer = setInterval(() => {
       setCurrentSlide((current) => (current + 1) % slides.length);
     }, 5000);
 
     return () => clearInterval(timer);
-  }, [imagesLoaded, slides.length]);
-
-  if (!imagesLoaded) {
-    return (
-      <section className="relative bg-black text-white h-[450px] md:h-[700px] flex items-center">
-        <div className="absolute inset-0 bg-black/60" />
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-3xl">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">
-              Loading...
-            </h1>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  }, [slides.length]);
 
   return (
     <section className="relative bg-black text-white h-[600px] md:h-[700px] flex items-center overflow-hidden">
