@@ -78,27 +78,16 @@ export default function Hero() {
   useEffect(() => {
     const loadImages = async () => {
       try {
-        // Try to get cached images first
-        const cachedHeroImages = JSON.parse(
-          localStorage.getItem("heroImages") || "[]"
-        );
-        if (cachedHeroImages.length > 0) {
-          setSlides(cachedHeroImages);
-          preloadImages(cachedHeroImages.map((slide: any) => slide.url));
-          return;
-        }
-
-        // If no cached images, fetch from Firestore
+        // Always fetch from Firestore to get the latest order
         const q = query(collection(db, "heroImages"), orderBy("order"));
         const snapshot = await getDocs(q);
         const uploadedSlides = snapshot.docs.map((doc) => ({
-          url: doc.data().url,
-          alt: doc.data().alt,
+          id: doc.id,
+          ...doc.data(),
         }));
 
         if (uploadedSlides.length > 0) {
           setSlides(uploadedSlides);
-          localStorage.setItem("heroImages", JSON.stringify(uploadedSlides));
           preloadImages(uploadedSlides.map((slide) => slide.url));
         }
       } catch (error) {
@@ -108,17 +97,12 @@ export default function Hero() {
     };
 
     loadImages();
+
+    // Set up a polling interval to check for order changes
+    const interval = setInterval(loadImages, 5000);
+
+    return () => clearInterval(interval);
   }, []);
-
-  useEffect(() => {
-    if (slides.length === 0) return;
-
-    const timer = setInterval(() => {
-      setCurrentSlide((current) => (current + 1) % slides.length);
-    }, 5000);
-
-    return () => clearInterval(timer);
-  }, [slides.length]);
 
   return (
     <section className="relative bg-black text-white h-[600px] md:h-[700px] flex items-center overflow-hidden">
