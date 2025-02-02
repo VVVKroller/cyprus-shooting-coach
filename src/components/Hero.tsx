@@ -56,12 +56,11 @@ const getTextSizeClass = (
 
 export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [slides, setSlides] =
-    useState<{ url: string; alt: string }[]>(localHeroImages);
+  const [slides, setSlides] = useState<{ url: string; alt: string }[]>([]);
   const { t } = useTranslation();
 
   // Preload images
-  const preloadImages = (imageUrls: string[]) => {
+  const preloadImages = async (imageUrls: string[]) => {
     const loadImage = (url: string): Promise<void> => {
       return new Promise((resolve) => {
         const img = new Image();
@@ -70,11 +69,12 @@ export default function Hero() {
       });
     };
 
-    return Promise.all(imageUrls.map((url) => loadImage(url))).catch((error) =>
+    await Promise.all(imageUrls.map((url) => loadImage(url))).catch((error) =>
       console.error("Error preloading images:", error)
     );
   };
 
+  // Load images from Firestore
   useEffect(() => {
     const loadImages = async () => {
       try {
@@ -87,22 +87,46 @@ export default function Hero() {
         }));
 
         if (uploadedSlides.length > 0) {
+          await preloadImages(uploadedSlides.map((slide) => slide.url));
           setSlides(uploadedSlides);
-          preloadImages(uploadedSlides.map((slide) => slide.url));
+        } else {
+          await preloadImages(localHeroImages.map((slide) => slide.url));
+          setSlides(localHeroImages);
         }
       } catch (error) {
         console.error("Error loading images:", error);
-        // Keep using local images if there's an error
+        await preloadImages(localHeroImages.map((slide) => slide.url));
+        setSlides(localHeroImages);
       }
     };
 
     loadImages();
 
-    // Set up a polling interval to check for order changes
-    const interval = setInterval(loadImages, 5000);
+    // Reduced polling interval from 5000ms to 3000ms
+    const interval = setInterval(loadImages, 3000);
 
     return () => clearInterval(interval);
   }, []);
+
+  // Carousel effect - reduced interval from 5000ms to 3000ms
+  useEffect(() => {
+    if (slides.length === 0) return;
+
+    const timer = setInterval(() => {
+      setCurrentSlide((current) => (current + 1) % slides.length);
+    }, 3000); // Changed from 5000ms to 3000ms for faster transitions
+
+    return () => clearInterval(timer);
+  }, [slides.length]);
+
+  // Show loading or local images while fetching
+  if (slides.length === 0) {
+    return (
+      <section className="relative bg-black text-white h-[600px] md:h-[700px] flex items-center overflow-hidden">
+        <div className="absolute inset-0 bg-black/60" />
+      </section>
+    );
+  }
 
   return (
     <section className="relative bg-black text-white h-[600px] md:h-[700px] flex items-center overflow-hidden">
