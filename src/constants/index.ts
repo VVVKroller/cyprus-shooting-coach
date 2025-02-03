@@ -6,5 +6,6 @@ export const ACADEMY = {
     EMAIL: "arielkiosk@hotmail.gr",
     PHONE_1: "+357 99 748 300",
     PHONE_2: "+357 99 796 005",
+    LOCATION: "Limassol, Cyprus",
   },
 };

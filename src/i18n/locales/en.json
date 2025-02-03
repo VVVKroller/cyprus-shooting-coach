@@ -62,7 +62,7 @@
         "Basic marksmanship",
         "Range etiquette"
       ],
-      "price": "Starting at €75/hour",
+      "price": "€60 per session",
       "duration": "2-3 hours per session"
     },
     "intermediate": {
@@ -74,7 +74,7 @@
         "Speed and accuracy",
         "Tactical applications"
       ],
-      "price": "Starting at €90/hour",
+      "price": "€60 per session",
       "duration": "2-4 hours per session"
     },
     "advanced": {
@@ -86,7 +86,7 @@
         "Mental training",
         "Performance optimization"
       ],
-      "price": "Starting at €120/hour",
+      "price": "€75 per session",
       "duration": "3-4 hours per session"
     }
   },
@@ -184,7 +184,7 @@
   "footer": {
     "contact": {
       "title": "Contact Us",
-      "location": "Nicosia, Cyprus"
+      "location": "Limassol, Cyprus"
     },
     "social": {
       "title": "Follow Us"
