@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import CalendarGrid from "./Calendar/CalendarGrid";
 import TimeSlots from "./Calendar/TimeSlots";
 import { format } from "date-fns";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase/config";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function ContactForm() {
   const { t } = useTranslation();
@@ -20,10 +21,12 @@ export default function ContactForm() {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedDate || !selectedTime || isSubmitting) return;
+    if (!selectedDate || !selectedTime || isSubmitting || !captchaToken) return;
 
     // Show confirmation dialog instead of submitting directly
     setShowConfirmDialog(true);
@@ -32,7 +35,7 @@ export default function ContactForm() {
   const handleConfirmSubmit = async () => {
     try {
       setIsSubmitting(true);
-      await addDoc(collection(db, "trainingRequests"), {
+      const docRef = await addDoc(collection(db, "trainingRequests"), {
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
@@ -40,35 +43,47 @@ export default function ContactForm() {
         time: selectedTime,
         status: "pending",
         createdAt: new Date(),
+        captchaToken,
       });
 
-      // Reset form
-      setFormData({ name: "", email: "", phone: "" });
-      setSelectedDate(null);
-      setSelectedTime(null);
-      setShowConfirmDialog(false);
-      setConsentChecked(false);
-
-      // Show success message
-      setShowSuccessMessage(true);
-      setShowErrorMessage(false);
-
-      // Hide success message after 5 seconds
-      setTimeout(() => {
-        setShowSuccessMessage(false);
-      }, 5000);
+      // Listen for verification result
+      const unsubscribe = onSnapshot(
+        doc(db, "trainingRequests", docRef.id),
+        (doc) => {
+          const data = doc.data();
+          if (data?.recaptchaVerified === false) {
+            // Show error if verification failed
+            setShowErrorMessage(true);
+            setShowSuccessMessage(false);
+            // Optionally reset form
+            resetForm();
+          } else if (data?.recaptchaVerified === true) {
+            // Show success if verification passed
+            setShowSuccessMessage(true);
+            setShowErrorMessage(false);
+            resetForm();
+          }
+          // Clean up listener
+          unsubscribe();
+        }
+      );
     } catch (error) {
       console.error("Error submitting request:", error);
       setShowErrorMessage(true);
       setShowSuccessMessage(false);
-
-      // Hide error message after 5 seconds
-      setTimeout(() => {
-        setShowErrorMessage(false);
-      }, 5000);
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const resetForm = () => {
+    setFormData({ name: "", email: "", phone: "" });
+    setSelectedDate(null);
+    setSelectedTime(null);
+    setShowConfirmDialog(false);
+    setConsentChecked(false);
+    setCaptchaToken(null);
+    recaptchaRef.current?.reset();
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,6 +91,10 @@ export default function ContactForm() {
       ...formData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  const onCaptchaChange = (token: string | null) => {
+    setCaptchaToken(token);
   };
 
   return (
@@ -177,10 +196,23 @@ export default function ContactForm() {
             </label>
           </div>
 
+          <div className="flex justify-center my-4">
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              sitekey="6LdwJ9EqAAAAAAr3jR5CDGAtvXGQYtORWHMLRpb9"
+              onChange={onCaptchaChange}
+              theme="dark"
+            />
+          </div>
+
           <button
             type="submit"
             disabled={
-              !selectedDate || !selectedTime || isSubmitting || !consentChecked
+              !selectedDate ||
+              !selectedTime ||
+              isSubmitting ||
+              !consentChecked ||
+              !captchaToken
             }
             className="w-full bg-amber-500 text-gray-900 py-3 px-4 rounded-md hover:bg-amber-400 transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed text-base"
           >

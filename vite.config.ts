@@ -8,4 +8,16 @@ export default defineConfig({
     exclude: ["lucide-react"],
   },
   base: "/",
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          // Split code for better loading
+        }
+      }
+    },
+    minify: 'terser',
+    // Optimize bundle size
+  }
 });

@@ -1,0 +1,29 @@
+{
+  "@context": "https://schema.org",
+  "@type": "SportsActivityLocation",
+  "name": "Cyprus Shooting Clays Academy",
+  "description": "Professional clay shooting training academy in Limassol, Cyprus, offering specialized programs for all skill levels. Led by Renos Charalampous, an ISSF Level A Coach and European Champion, we provide expert instruction in Olympic Trap, Skeet, and Clay Target shooting. With over 15 years of experience, multiple international certifications, and a proven track record of training over 600 students, we offer personalized instruction in a safe, controlled environment. Our comprehensive programs range from beginner courses to advanced competition preparation.",
+  "image": [
+    "url-to-image1.jpg",
+    "url-to-image2.jpg"
+   ],
+  "priceRange": "€€",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "YOUR_STREET_ADDRESS",
+    "addressLocality": "Limassol",
+    "addressRegion": "Limassol",
+    "postalCode": "YOUR_POSTAL_CODE",
+    "addressCountry": "CY"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": YOUR_LATITUDE,
+    "longitude": YOUR_LONGITUDE
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "reviewCount": "100"
+  }
+} 

@@ -53,6 +53,18 @@
     "features": {
       "title": "What You'll Learn"
     },
+    "firstShot": {
+      "title": "\"First Shot Experience\"",
+      "description": "Perfect for those who have never handled a firearm before. This introductory session focuses on basic safety, familiarization with firearms, and your first shooting experience in a highly controlled, safe environment with close personal guidance.",
+      "features": [
+        "Basic firearm safety introduction",
+        "Firearm familiarization",
+        "One-on-one guidance",
+        "First shooting experience"
+      ],
+      "price": "€50 per session",
+      "duration": "1-2 hours per session"
+    },
     "beginner": {
       "title": "Beginner Course",
       "description": "Perfect for those new to shooting. This comprehensive course covers all the fundamentals of firearm safety and basic marksmanship. You'll learn in a controlled, supportive environment with personalized attention.",

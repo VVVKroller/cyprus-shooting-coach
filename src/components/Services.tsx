@@ -1,23 +1,48 @@
 import React, { useState } from "react";
-import { Shield, Target, Trophy, X, Clock, Wallet } from "lucide-react";
+import {
+  Shield,
+  Target,
+  Trophy,
+  X,
+  Clock,
+  Wallet,
+  Crosshair,
+  Gauge,
+} from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 const services = [
   {
+    icon: Crosshair,
+    key: "firstShot",
+    color: "from-purple-500 to-purple-700",
+    borderColor:
+      "border-purple-500 md:border-gray-700 md:hover:border-purple-500",
+    iconBg: "bg-gradient-to-r from-purple-500 to-purple-700",
+  },
+  {
     icon: Shield,
     key: "beginner",
     color: "from-green-500 to-emerald-700",
+    borderColor:
+      "border-green-500 md:border-gray-700 md:hover:border-green-500",
+    iconBg: "bg-gradient-to-r from-green-500 to-emerald-700",
   },
   {
-    icon: Target,
+    icon: Gauge,
     key: "intermediate",
     color: "from-blue-500 to-blue-700",
+    borderColor: "border-blue-500 md:border-gray-700 md:hover:border-blue-500",
+    iconBg: "bg-gradient-to-r from-blue-500 to-blue-700",
   },
   {
     icon: Trophy,
     key: "advanced",
     color: "from-amber-500 to-amber-700",
+    borderColor:
+      "border-amber-500 md:border-gray-700 md:hover:border-amber-500",
+    iconBg: "bg-gradient-to-r from-amber-500 to-amber-700",
   },
 ];
 
@@ -122,7 +147,7 @@ export default function Services() {
           {t("services.title")}
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 max-w-[1600px] mx-auto px-4">
           {services.map((service) => {
             const Icon = service.icon;
             const features = t(`services.${service.key}.features`, {
@@ -132,20 +157,20 @@ export default function Services() {
             return (
               <div
                 key={service.key}
-                className="bg-gray-900 rounded-lg overflow-hidden border border-gray-700 hover:border-amber-500 transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/10"
+                className={`bg-gray-900 rounded-lg overflow-hidden border transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/10 ${service.borderColor} min-w-[300px] flex flex-col`}
               >
                 <div
-                  className={`bg-gradient-to-r ${service.color} p-6 flex items-center justify-center`}
+                  className={`${service.iconBg} p-4 flex items-center justify-center`}
                 >
-                  <Icon className="w-12 h-12 text-white" />
+                  <Icon className="w-8 h-8 text-white" />
                 </div>
 
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">
+                <div className="p-6 flex-1 flex flex-col">
+                  <h3 className="text-xl font-semibold text-white mb-4 h-[56px]">
                     {t(`services.${service.key}.title`)}
                   </h3>
 
-                  <ul className="space-y-3 mb-6">
+                  <ul className="space-y-3 mb-6 flex-1 min-h-[200px]">
                     {features.map((feature, index) => (
                       <li
                         key={index}
@@ -157,7 +182,7 @@ export default function Services() {
                     ))}
                   </ul>
 
-                  <div className="flex flex-col space-y-3">
+                  <div className="flex flex-col space-y-3 mt-auto">
                     <p className="text-amber-500 font-semibold">
                       {t(`services.${service.key}.price`)}
                     </p>

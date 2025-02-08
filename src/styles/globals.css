@@ -1,0 +1,10 @@
+/* Ensure mobile-friendly design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  .hero-section {
+    min-height: 60vh;
+  }
+  /* Add more mobile-specific styles */
+} 
